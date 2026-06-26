@@ -5,7 +5,7 @@ import Logo2 from "../../../assets/TimeLineLogo/Logo2.svg"
 import Logo3 from "../../../assets/TimeLineLogo/Logo3.svg"
 import Logo4 from "../../../assets/TimeLineLogo/Logo4.svg"
 
-import timelineImage from "../../../assets/Images/timelineImage.png"
+import timelineImage from "../../../assets/Images/TimelineImage.png"
 
 const timeline = [
   {
