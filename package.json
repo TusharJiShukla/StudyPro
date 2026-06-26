@@ -32,8 +32,7 @@
     "react-router-dom": "^7.15.1",
     "react-super-responsive-table": "^6.0.2",
     "react-type-animation": "^3.2.0",
-    "swiper": "^12.1.4",
-    "video-react": "^0.16.0"
+    "swiper": "^12.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

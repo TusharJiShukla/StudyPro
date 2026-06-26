@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import {toast} from "react-hot-toast";
-import "video-react/dist/video-react.css"
 import { useLocation } from "react-router-dom"
-import { BigPlayButton, Player } from "video-react"
 
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI"
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice"
@@ -265,14 +263,15 @@ const handleQuizSubmit = () => {
           className="h-full w-full rounded-md object-cover"
         />
       ) : (
-        <Player
-          ref={playerRef}
-          aspectRatio="16:9"
-          playsInline
-          onEnded={() => setVideoEnded(true)}
-          src={videoData?.videoUrl}
-        >
-          <BigPlayButton position="center" />
+        <div className="relative">
+          <video
+            ref={playerRef}
+            controls
+            playsInline
+            className="w-full rounded-md"
+            src={videoData?.videoUrl}
+            onEnded={() => setVideoEnded(true)}
+          />
           {/* Render When Video Ends */}
           {videoEnded && (
             <div
@@ -295,7 +294,8 @@ const handleQuizSubmit = () => {
                 onclick={() => {
                   if (playerRef?.current) {
                     // set the current time of the video to 0
-                    playerRef?.current?.seek(0)
+                    playerRef.current.currentTime = 0;
+                    playerRef.current.play();
                     setVideoEnded(false)
                   }
                 }}
@@ -324,7 +324,7 @@ const handleQuizSubmit = () => {
               </div>
             </div>
           )}
-        </Player>
+        </div>
       )}
 
       <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>

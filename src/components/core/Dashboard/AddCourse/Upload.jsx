@@ -3,8 +3,6 @@ import { useDropzone } from "react-dropzone"
 import { FiUploadCloud } from "react-icons/fi"
 import { useSelector } from "react-redux"
 
-import "video-react/dist/video-react.css"
-import { Player } from "video-react"
 
 export default function Upload({
   name,
@@ -76,7 +74,12 @@ export default function Upload({
                 className="h-full w-full rounded-md object-cover"
               />
             ) : (
-              <Player aspectRatio="16:9" playsInline src={previewSource} />
+              <video
+                controls
+                playsInline
+                className="w-full rounded-md"
+                src={previewSource}
+              />
             )}
             {!viewData && (
               <button
