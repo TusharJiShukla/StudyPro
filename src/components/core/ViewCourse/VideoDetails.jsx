@@ -8,7 +8,7 @@ import { markLectureAsComplete } from "../../../services/operations/courseDetail
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice"
 import IconBtn from "../../common/IconBtn"
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI";
-import { apiConnector } from "../../../services/apiconnector";
+import { apiConnector } from "../../../services/apiConnector";
 import { courseEndpoints } from "../../../services/apis";
 import ReactMarkdown from "react-markdown";
 import { FaRobot, FaClipboardCheck } from "react-icons/fa";
