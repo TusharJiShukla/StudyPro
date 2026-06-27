@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Link, matchPath, useLocation } from "react-router-dom";
@@ -19,6 +19,7 @@ function Navbar() {
 
   const [subLinks, setSubLinks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -41,14 +42,16 @@ function Navbar() {
 
   return (
     <div
-      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
+      className={`relative flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 z-50 ${
         location.pathname !== "/" ? "bg-richblack-800" : ""
       } transition-all duration-200`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
         <Link to="/">
-          <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
+          <div className="text-2xl font-bold text-richblack-5 flex items-center tracking-tight">
+            <span className="text-yellow-50">Study</span>Pro
+          </div>
         </Link>
         {/* Navigation links */}
         <nav className="hidden md:block">
@@ -136,10 +139,94 @@ function Navbar() {
           )}
           {token !== null && <ProfileDropdown />}
         </div>
-        <button className="mr-4 md:hidden">
-          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+        <button className="mr-4 md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? (
+            <AiOutlineClose fontSize={24} fill="#AFB2BF" />
+          ) : (
+            <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+          )}
         </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="absolute top-14 left-0 w-full bg-richblack-800 border-b border-richblack-700 md:hidden z-50 flex flex-col p-4 shadow-lg shadow-richblack-900">
+          <nav>
+            <ul className="flex flex-col gap-4 text-richblack-25">
+              {NavbarLinks.map((link, index) => (
+                <li key={index}>
+                  {link.title === "Catalog" ? (
+                    <div className="flex flex-col gap-2">
+                      <p className="text-richblack-25 font-semibold">{link.title}</p>
+                      <div className="pl-4 flex flex-col gap-2 border-l border-richblack-700">
+                        {loading ? (
+                          <p>Loading...</p>
+                        ) : subLinks && subLinks.length ? (
+                          subLinks.map((subLink, i) => (
+                            <Link
+                              key={i}
+                              to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="text-sm hover:text-yellow-50 transition-all"
+                            >
+                              {subLink.name}
+                            </Link>
+                          ))
+                        ) : (
+                          <p>No Courses Found</p>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link to={link?.path} onClick={() => setIsMobileMenuOpen(false)}>
+                      <p className={`font-semibold ${matchRoute(link?.path) ? "text-yellow-50" : "text-richblack-25"}`}>
+                        {link.title}
+                      </p>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          
+          {/* Mobile Login / Signup / Dashboard */}
+          <div className="flex flex-col gap-4 mt-4 pt-4 border-t border-richblack-700">
+            {token === null && (
+              <>
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="w-full rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 text-center">
+                    Log in
+                  </button>
+                </Link>
+                <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="w-full rounded-[8px] border border-yellow-50 bg-yellow-50 px-[12px] py-[8px] text-richblack-900 font-bold text-center">
+                    Sign up
+                  </button>
+                </Link>
+              </>
+            )}
+            {token !== null && (
+              <div className="flex flex-col gap-4">
+                {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
+                  <Link to="/dashboard/cart" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2">
+                    <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
+                    <span className="text-richblack-100 font-semibold">Your Cart</span>
+                    {totalItems > 0 && (
+                      <span className="ml-2 rounded-full bg-richblack-600 px-2 text-xs font-bold text-yellow-100">
+                        {totalItems} items
+                      </span>
+                    )}
+                  </Link>
+                )}
+                <div onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
+                  <ProfileDropdown />
+                  <span className="text-richblack-100 ml-2 font-semibold">Dashboard</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

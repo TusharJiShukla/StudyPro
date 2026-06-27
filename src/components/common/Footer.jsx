@@ -51,7 +51,9 @@ const Footer = () => {
           {/* Section 1 */}
           <div className="lg:w-[50%] flex flex-wrap flex-row justify-between lg:border-r lg:border-richblack-700 pl-3 lg:pr-5 gap-3">
             <div className="w-[30%] flex flex-col gap-3 lg:w-[30%] mb-7 lg:pl-0">
-              <img src={Logo} alt="" className="object-contain" />
+              <div className="text-2xl font-bold text-richblack-5 flex items-center tracking-tight mb-2">
+                <span className="text-yellow-50">Study</span>Pro
+              </div>
               <h1 className="text-richblack-50 font-semibold text-[16px]">
                 Company
               </h1>
