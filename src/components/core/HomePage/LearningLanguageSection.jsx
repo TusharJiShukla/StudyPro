@@ -15,25 +15,25 @@ const LearningLanguageSection = () => {
         </div>
 
         {/* Sub Heading */}
-        <div className="text-center text-richblack-600 mx-auto text-base font-medium w-[70%]">
+        <div className="text-center text-richblack-600 mx-auto text-base font-medium w-full lg:w-[70%]">
           Using spin making learning multiple languages easy. With 20+ languages
           realistic voice-over, progress tracking, custom schedule and more.
         </div>
 
         {/* Images */}
-        <div className="flex flex-row items-center justify-center mt-5">
+        <div className="flex flex-col lg:flex-row items-center justify-center mt-5">
           <img
             src={know_your_progress}
             alt=""
-            className="object-contain mr-[-32px]"
+            className="object-contain lg:mr-[-32px] mb-4 lg:mb-0"
           />
 
-          <img src={compare_with_others} alt="" className="object-contain" />
+          <img src={compare_with_others} alt="" className="object-contain mb-4 lg:mb-0" />
 
           <img
             src={plan_your_lessons}
             alt=""
-            className="object-contain ml-[-36px]"
+            className="object-contain lg:ml-[-36px]"
           />
         </div>
 

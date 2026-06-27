@@ -5,7 +5,7 @@ import { sidebarLinks } from "../../../data/dashboard-links";
 import SidebarLink from "./SidebarLink";
 import { logout } from "../../../services/operations/authAPI";
 import ConfirmationModal from "../../common/ConfirmationModal";
-import { VscSettingsGear, VscSignOut } from "react-icons/vsc";
+import { VscSettingsGear, VscSignOut, VscMenu, VscChromeClose } from "react-icons/vsc";
 
 const Sidebar = () => {
   const { user, loading: profileLoading } = useSelector(
@@ -18,6 +18,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const [confirmationModal, setConfirmationModal] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   if (profileLoading || authLoading) {
     return <div className="mt-10 text-richblack-5">Loading...</div>;
@@ -25,7 +26,24 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="flex min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10">
+      {/* Mobile Menu Toggle Button */}
+      <button 
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="md:hidden absolute top-3 left-3 z-[60] text-richblack-5 bg-richblack-800 p-2 rounded-md"
+      >
+        {isSidebarOpen ? <VscChromeClose size={24}/> : <VscMenu size={24}/>}
+      </button>
+
+      {/* Overlay for mobile */}
+      {isSidebarOpen && (
+        <div 
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-richblack-900/50 z-40 md:hidden"
+        />
+      )}
+
+      {/* Sidebar Container */}
+      <div className={`flex min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10 pt-16 md:pt-10 absolute md:relative z-50 h-full transition-transform duration-200 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <div className="flex flex-col">
           {sidebarLinks.map((link, index) => {
             if (link.type && user?.accountType !== link.type) {

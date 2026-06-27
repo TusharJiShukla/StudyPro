@@ -13,19 +13,19 @@ const CodeBlocks = ({
   codeColor,
 }) => {
   return (
-    <div className={`flex ${position} my-20 justify-between gap-10 flex-col lg:flex-row`}>
+    <div className={`flex flex-col ${position} my-20 justify-between gap-10`}>
 
       {/* Left Section */}
       <div className="w-[100%] lg:w-[50%] flex flex-col gap-8">
 
         {heading}
 
-        <div className="text-richblack-300 text-base font-bold w-[85%]">
+        <div className="text-richblack-300 text-base font-bold w-full lg:w-[85%]">
           {subheading}
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-7 mt-7">
+        <div className="flex flex-col sm:flex-row gap-7 mt-7">
 
           <CTAButton active={ctabtn1.active} linkto={ctabtn1.linkto}>
             <div className="flex items-center gap-2">
