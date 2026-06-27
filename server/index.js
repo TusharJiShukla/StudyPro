@@ -24,10 +24,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://study-pro-gamma.vercel.app",
-    ],
+    origin: true, // Dynamically allows the actual requesting origin (fixes Vercel CORS)
     credentials: true,
   })
 )
